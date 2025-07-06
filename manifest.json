@@ -1,0 +1,29 @@
+{
+  "name": "Paz Church App",
+  "short_name": "Paz Church",
+  "description": "Aplicativo oficial da Paz Church. Fique por dentro da agenda, ministrações e mais.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#3B82F6",
+  "icons": [
+    {
+      "src": "paz_church_paripaba_logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "paz_church_paripaba_logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "paz_church_paripaba_logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ]
+}
