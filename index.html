@@ -254,7 +254,7 @@
                         <div>
                             <h3 class="font-semibold text-lg">Culto de Celebração</h3>
                             <p class="text-sm opacity-80">Domingo, às 17:30</p>
-                            <a href="http://googleusercontent.com/maps/google.com/0" target="_blank" class="text-blue-500 text-sm hover:underline">Ver no Mapa</a>
+                            <a href="https://maps.app.goo.gl/3K2zH2M295XHYqg16" target="_blank" class="text-blue-500 text-sm hover:underline">Ver no Mapa</a>
                         </div>
                     </div>
                     <div class="theme-card border rounded-lg p-4 flex items-center space-x-4">
@@ -503,7 +503,7 @@
             startAutoPlay();
         }
 
-        // --- Testimonials Functionality (CORRECTED) ---
+        // --- Testimonials Functionality (FINAL CORRECTION) ---
         async function carregarDepoimentos() {
             const container = document.getElementById('depoimentos-container');
             const urlPlanilha = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdRVplNG4USiw9I5plMvh-6FvtN6f7PkE3TdNlFzjhIdT13EhKZFGSD13bIYCgFP-y08llmF6WcjjE/pub?gid=1087812877&single=true&output=csv';
@@ -526,7 +526,6 @@
                 linhas.forEach(linha => {
                     if (linha.trim() === '') return;
 
-                    // Lógica robusta para separar colunas, mesmo com vírgulas no texto
                     const colunas = [];
                     let campoAtual = '';
                     let dentroDeAspas = false;
@@ -548,27 +547,31 @@
                     }
                     colunas.push(campoAtual);
 
-                    // **AQUI ESTÁ A CORREÇÃO PRINCIPAL**
-                    const autorizacao = colunas[2] ? colunas[2].trim().toLowerCase() : 'não';
+                    const nome = colunas[1] || 'Anônimo'; 
                     
-                    // Só exibe o depoimento se a pessoa autorizou (marcou "Sim")
-                    if (autorizacao === 'sim') {
-                        const nome = colunas[1] || 'Anônimo'; 
-                        const depoimento = colunas[3] || ''; // Pegando a coluna 3 para o depoimento
+                    // Junta as respostas das colunas 2, 3 e 4
+                    const respostaLifeGroup = colunas[2] || '';
+                    const nomeLifeGroup = colunas[3] || '';
+                    const depoimentoTexto = colunas[4] || '';
 
-                        const card = document.createElement('div');
-                        card.className = 'theme-card border rounded-lg p-4 shadow-sm flex flex-col';
-                        card.innerHTML = `
-                            <p class="theme-text opacity-80 italic flex-grow">"${depoimento}"</p>
-                            <p class="theme-text font-bold text-right mt-2">- ${nome}</p>
-                        `;
-                        container.appendChild(card);
-                    }
+                    // Constrói o corpo do depoimento
+                    let corpoDepoimento = `
+                        <p><strong>Já faz parte de um Life Group?</strong> ${respostaLifeGroup}</p>
+                        ${nomeLifeGroup ? `<p><strong>Qual?</strong> ${nomeLifeGroup}</p>` : ''}
+                        ${depoimentoTexto ? `<p class="mt-2 italic">"${depoimentoTexto}"</p>` : ''}
+                    `;
+
+                    const card = document.createElement('div');
+                    card.className = 'theme-card border rounded-lg p-4 shadow-sm flex flex-col';
+                    card.innerHTML = `
+                        <div class="theme-text opacity-80 flex-grow">${corpoDepoimento}</div>
+                        <p class="theme-text font-bold text-right mt-2">- ${nome}</p>
+                    `;
+                    container.appendChild(card);
                 });
 
-                // Se depois de filtrar ninguém autorizou, mostra a mensagem
                 if (container.children.length === 0) {
-                    container.innerHTML = '<p class="theme-text col-span-full text-center">Ainda não há depoimentos autorizados para exibição.</p>';
+                    container.innerHTML = '<p class="theme-text col-span-full text-center">Nenhum depoimento encontrado.</p>';
                 }
 
             } catch (error) {
