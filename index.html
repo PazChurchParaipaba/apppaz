@@ -235,7 +235,7 @@
                 </div>
                 
                 <div class="mt-8">
-                    <h3 class="text-2xl font-bold theme-text mb-4">O que dizem nossos membros dos lifes</h3>
+                    <h3 class="text-2xl font-bold theme-text mb-4">O que dizem nossos membros</h3>
                     <div id="depoimentos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <p class="theme-text col-span-full text-center">Carregando depoimentos...</p>
                     </div>
@@ -548,17 +548,28 @@
                     }
                     colunas.push(campoAtual);
 
-                    const nome = colunas[1] || 'Anônimo'; 
-                    const depoimento = colunas[2] || '';
+                    // **AQUI ESTÁ A CORREÇÃO PRINCIPAL**
+                    const autorizacao = colunas[2] ? colunas[2].trim().toLowerCase() : 'não';
+                    
+                    // Só exibe o depoimento se a pessoa autorizou (marcou "Sim")
+                    if (autorizacao === 'sim') {
+                        const nome = colunas[1] || 'Anônimo'; 
+                        const depoimento = colunas[3] || ''; // Pegando a coluna 3 para o depoimento
 
-                    const card = document.createElement('div');
-                    card.className = 'theme-card border rounded-lg p-4 shadow-sm flex flex-col';
-                    card.innerHTML = `
-                        <p class="theme-text opacity-80 italic flex-grow">"${depoimento}"</p>
-                        <p class="theme-text font-bold text-right mt-2">- ${nome}</p>
-                    `;
-                    container.appendChild(card);
+                        const card = document.createElement('div');
+                        card.className = 'theme-card border rounded-lg p-4 shadow-sm flex flex-col';
+                        card.innerHTML = `
+                            <p class="theme-text opacity-80 italic flex-grow">"${depoimento}"</p>
+                            <p class="theme-text font-bold text-right mt-2">- ${nome}</p>
+                        `;
+                        container.appendChild(card);
+                    }
                 });
+
+                // Se depois de filtrar ninguém autorizou, mostra a mensagem
+                if (container.children.length === 0) {
+                    container.innerHTML = '<p class="theme-text col-span-full text-center">Ainda não há depoimentos autorizados para exibição.</p>';
+                }
 
             } catch (error) {
                 container.innerHTML = '<p class="theme-text col-span-full text-center">Não foi possível carregar os depoimentos.</p>';
