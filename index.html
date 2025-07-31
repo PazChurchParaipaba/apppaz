@@ -254,7 +254,7 @@
                         <div>
                             <h3 class="font-semibold text-lg">Culto de Celebração</h3>
                             <p class="text-sm opacity-80">Domingo, às 17:30</p>
-                            <a href="https://maps.app.goo.gl/3K2zH2M295XHYqg16" target="_blank" class="text-blue-500 text-sm hover:underline">Ver no Mapa</a>
+                            <a href="https://www.google.com/maps/@-3.4365759,-39.1489596,3a,75y,283.96h,90t/data=!3m7!1e1!3m5!1sHYcM1KjwzlsaAftWhA3eLA!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DHYcM1KjwzlsaAftWhA3eLA%26yaw%3D283.96!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-blue-500 text-sm hover:underline">Ver no Mapa</a>
                         </div>
                     </div>
                     <div class="theme-card border rounded-lg p-4 flex items-center space-x-4">
@@ -291,6 +291,16 @@
 
             <div id="lifegroup" class="page">
                 <h2 class="text-2xl md:text-3xl font-bold mb-6 theme-text hidden md:block">Life Groups</h2>
+
+                <div class="theme-card border rounded-lg p-6 shadow-sm mb-6">
+                    <h3 class="text-xl font-semibold mb-2">Deixe seu Depoimento</h3>
+                    <p class="mb-4 opacity-80">Sua experiência no Life Group é importante! Compartilhe seu depoimento conosco clicando no botão abaixo.</p>
+                    <div class="mt-4 text-center">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1KQQTh79-WI8grOntMR76RhXPNzvA5ddardT19qKZIbp5aA/viewform?usp=sharing&ouid=107593731614823362209" target="_blank" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors inline-flex items-center justify-center w-full md:w-auto">
+                            <i class="fas fa-pen-to-square mr-2"></i>Deixar um Depoimento
+                        </a>
+                    </div>
+                </div>
                 
                 <div class="theme-card border rounded-lg p-6 shadow-sm mb-6">
                     <h3 class="text-xl font-semibold mb-2">Materiais de Estudo</h3>
@@ -458,7 +468,7 @@
             let autoPlayInterval;
 
             if (dotsContainer) {
-                dotsContainer.innerHTML = ''; // Limpa os pontos antes de adicionar novos
+                dotsContainer.innerHTML = '';
                 for (let i = 0; i < totalSlides; i++) {
                     const dot = document.createElement('button');
                     dot.classList.add('w-3', 'h-3', 'rounded-full', 'bg-white', 'bg-opacity-50', 'hover:bg-opacity-100', 'transition-all');
@@ -531,30 +541,24 @@
                     let dentroDeAspas = false;
                     for (const char of linha) {
                         if (char === '"' && !dentroDeAspas) {
-                            dentroDeAspas = true;
-                            continue;
+                            dentroDeAspas = true; continue;
                         }
                         if (char === '"' && dentroDeAspas) {
-                            dentroDeAspas = false;
-                            continue;
+                            dentroDeAspas = false; continue;
                         }
                         if (char === ',' && !dentroDeAspas) {
                             colunas.push(campoAtual);
-                            campoAtual = '';
-                            continue;
+                            campoAtual = ''; continue;
                         }
                         campoAtual += char;
                     }
                     colunas.push(campoAtual);
-
-                    const nome = colunas[1] || 'Anônimo'; 
                     
-                    // Junta as respostas das colunas 2, 3 e 4
+                    const nome = colunas[1] || 'Anônimo'; 
                     const respostaLifeGroup = colunas[2] || '';
                     const nomeLifeGroup = colunas[3] || '';
                     const depoimentoTexto = colunas[4] || '';
 
-                    // Constrói o corpo do depoimento
                     let corpoDepoimento = `
                         <p><strong>Já faz parte de um Life Group?</strong> ${respostaLifeGroup}</p>
                         ${nomeLifeGroup ? `<p><strong>Qual?</strong> ${nomeLifeGroup}</p>` : ''}
