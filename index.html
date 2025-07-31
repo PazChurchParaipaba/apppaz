@@ -113,6 +113,12 @@
         #bible-text {
             height: calc(100vh - 300px);
         }
+
+        #carousel-wrapper img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -375,7 +381,7 @@
             const newPage = document.getElementById(pageId);
             if (newPage) {
                 newPage.classList.add('active');
-                const link = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+                const link = document.querySelector(`.nav-link[_data-page="${pageId}"]`);
                 if(link) {
                    pageTitle.textContent = link.querySelector('span').textContent;
                 }
@@ -406,7 +412,7 @@
         // Initialize the app by showing the home page
         document.addEventListener('DOMContentLoaded', () => {
             showPage('home');
-            document.querySelector('.nav-link[data-page="home"]').classList.add('bg-blue-500', 'text-white');
+            document.querySelector('.nav-link[_data-page="home"]').classList.add('bg-blue-500', 'text-white');
         });
 
         // --- Theme Switcher ---
@@ -452,8 +458,8 @@
                 // Update dots
                 if(dots.length > 0) {
                     for (let i = 0; i < dots.length; i++) {
-                        dots[i].classList.toggle('bg-opacity-100', i === currentIndex);
-                        dots[i].classList.toggle('bg-opacity-50', i !== currentIndex);
+                        dots[_i].classList.toggle('bg-opacity-100', i === currentIndex);
+                        dots[_i].classList.toggle('bg-opacity-50', i !== currentIndex);
                     }
                 }
             }
