@@ -170,19 +170,19 @@
                 <div id="carousel-container" class="relative w-full max-w-4xl mx-auto mb-8 shadow-lg rounded-lg overflow-hidden">
                     <div id="carousel-wrapper" class="flex transition-transform duration-500 ease-in-out">
                         <div class="w-full flex-shrink-0">
-                            <img src="life1.jpg" alt="Foto do Life Group 1" class="w-full h-48 md:h-64 object-cover">
+                            <img src="life1.jpg" alt="Foto do Life Group 1" class="w-full h-48 md:h-64">
                         </div>
                         <div class="w-full flex-shrink-0">
-                            <img src="life2.jpg" alt="Foto do Life Group 2" class="w-full h-48 md:h-64 object-cover">
+                            <img src="life2.jpg" alt="Foto do Life Group 2" class="w-full h-48 md:h-64">
                         </div>
                         <div class="w-full flex-shrink-0">
-                            <img src="life3.jpg" alt="Foto do Life Group 3" class="w-full h-48 md:h-64 object-cover">
+                            <img src="life3.jpg" alt="Foto do Life Group 3" class="w-full h-48 md:h-64">
                         </div>
                         <div class="w-full flex-shrink-0">
-                            <img src="life4.jpg" alt="Foto do Life Group 4" class="w-full h-48 md:h-64 object-cover">
+                            <img src="life4.jpg" alt="Foto do Life Group 4" class="w-full h-48 md:h-64">
                         </div>
                         <div class="w-full flex-shrink-0">
-                            <img src="life5.jpg" alt="Foto do Life Group 5" class="w-full h-48 md:h-64 object-cover">
+                            <img src="life5.jpg" alt="Foto do Life Group 5" class="w-full h-48 md:h-64">
                         </div>
                     </div>
             
@@ -194,8 +194,9 @@
                     </button>
             
                     <div id="pagination-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                        </div>
+                    </div>
                 </div>
+
                 <div id="install-app-container" class="mb-6 hidden">
                     <button id="install-button" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition-colors flex items-center justify-center">
                         <i class="fas fa-download mr-2"></i> Instalar Aplicativo
@@ -283,11 +284,24 @@
             <div id="lifegroup" class="page">
                 <h2 class="text-2xl md:text-3xl font-bold mb-6 theme-text hidden md:block">Life Groups</h2>
                 <div class="theme-card border rounded-lg p-6 shadow-sm">
-                    <h3 class="text-xl font-semibold mb-2">Encontre um Life Group</h3>
-                    <p class="mb-4 opacity-80">Life groups são pequenos grupos que se reúnem semanalmente para comunhão, estudo da Bíblia e oração. Acesse nossos materiais de estudo e encontre um grupo perto de você!</p>
-                    <div class="mt-4 text-center">
-                        <a href="https://drive.google.com/drive/folders/14Md1-keFONT1zyrWxqHlL_1tA8fKn10v" target="_blank" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors inline-block">
-                            <i class="fas fa-folder-open mr-2"></i>Acessar Materiais do Life Group
+                    <h3 class="text-xl font-semibold mb-2">Galerias de Fotos</h3>
+                    <p class="mb-4 opacity-80">Acompanhe os momentos especiais de cada Life Group. Clique em um dos botões abaixo para ver a galeria de fotos correspondente.</p>
+                    
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="https://drive.google.com/drive/folders/1QlTLljPS8DPD2bF5rwM-GMs0dz3_9P7s" target="_blank" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors inline-flex items-center justify-center">
+                            <i class="fas fa-camera-retro mr-2"></i>Fotos Life Atos
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/1QejwPt_y9snp_da7V0fGAmr_n_dXxE71" target="_blank" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors inline-flex items-center justify-center">
+                            <i class="fas fa-camera-retro mr-2"></i>Fotos Life Flechas
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/1QnQd4f3JeGkqTfYwHVowH0sKRMLxJ7Nh" target="_blank" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors inline-flex items-center justify-center">
+                            <i class="fas fa-camera-retro mr-2"></i>Fotos Filhos da Promessa
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/1QIVoQSwIEiA83j2vTtuOgUc7XiUxQOjd" target="_blank" class="bg-yellow-600 text-white px-6 py-3 rounded-lg hover:bg-yellow-700 transition-colors inline-flex items-center justify-center">
+                            <i class="fas fa-camera-retro mr-2"></i>Fotos Life Leão de Judá
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/1QGmeApQOMy1h_7FULFBXFyu0ebAznppH" target="_blank" class="bg-purple-500 text-white px-6 py-3 rounded-lg hover:bg-purple-600 transition-colors inline-flex items-center justify-center">
+                            <i class="fas fa-camera-retro mr-2"></i>Fotos Life Pão da Vida
                         </a>
                     </div>
                 </div>
@@ -381,7 +395,7 @@
             const newPage = document.getElementById(pageId);
             if (newPage) {
                 newPage.classList.add('active');
-                const link = document.querySelector(`.nav-link[_data-page="${pageId}"]`);
+                const link = document.querySelector(`.nav-link[data-page="${pageId}"]`);
                 if(link) {
                    pageTitle.textContent = link.querySelector('span').textContent;
                 }
@@ -412,7 +426,7 @@
         // Initialize the app by showing the home page
         document.addEventListener('DOMContentLoaded', () => {
             showPage('home');
-            document.querySelector('.nav-link[_data-page="home"]').classList.add('bg-blue-500', 'text-white');
+            document.querySelector('.nav-link[data-page="home"]').classList.add('bg-blue-500', 'text-white');
         });
 
         // --- Theme Switcher ---
@@ -458,8 +472,8 @@
                 // Update dots
                 if(dots.length > 0) {
                     for (let i = 0; i < dots.length; i++) {
-                        dots[_i].classList.toggle('bg-opacity-100', i === currentIndex);
-                        dots[_i].classList.toggle('bg-opacity-50', i !== currentIndex);
+                        dots[i].classList.toggle('bg-opacity-100', i === currentIndex);
+                        dots[i].classList.toggle('bg-opacity-50', i !== currentIndex);
                     }
                 }
             }
