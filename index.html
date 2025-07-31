@@ -233,6 +233,14 @@
                         <p class="theme-text opacity-80">Apoie nossa missão e ministérios.</p>
                     </div>
                 </div>
+                
+                <div class="mt-8">
+                    <h3 class="text-2xl font-bold theme-text mb-4">O que dizem nossos membros</h3>
+                    <div id="depoimentos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <p class="theme-text col-span-full text-center">Carregando depoimentos...</p>
+                    </div>
+                </div>
+
             </div>
 
             <div id="agenda" class="page">
@@ -246,7 +254,7 @@
                         <div>
                             <h3 class="font-semibold text-lg">Culto de Celebração</h3>
                             <p class="text-sm opacity-80">Domingo, às 17:30</p>
-                            <a href="https://www.google.com/maps/@-3.4365759,-39.1489596,3a,75y,283.96h,90t/data=!3m7!1e1!3m5!1sHYcM1KjwzlsaAftWhA3eLA!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DHYcM1KjwzlsaAftWhA3eLA%26yaw%3D283.96!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-blue-500 text-sm hover:underline">Ver no Mapa</a>
+                            <a href="https://maps.app.goo.gl/3f5v9j4w8Q7x6yZt5" target="_blank" class="text-blue-500 text-sm hover:underline">Ver no Mapa</a>
                         </div>
                     </div>
                     <div class="theme-card border rounded-lg p-4 flex items-center space-x-4">
@@ -283,6 +291,17 @@
 
             <div id="lifegroup" class="page">
                 <h2 class="text-2xl md:text-3xl font-bold mb-6 theme-text hidden md:block">Life Groups</h2>
+                
+                <div class="theme-card border rounded-lg p-6 shadow-sm mb-6">
+                    <h3 class="text-xl font-semibold mb-2">Materiais de Estudo</h3>
+                    <p class="mb-4 opacity-80">Acesse nossos materiais de estudo para os Life Groups e aprofunde seu conhecimento na Palavra.</p>
+                    <div class="mt-4 text-center">
+                        <a href="https://drive.google.com/drive/folders/14Md1-keFONT1zyrWxqHlL_1tA8fKn10v" target="_blank" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors inline-flex items-center justify-center w-full md:w-auto">
+                            <i class="fas fa-folder-open mr-2"></i>Acessar Materiais do Life Group
+                        </a>
+                    </div>
+                </div>
+
                 <div class="theme-card border rounded-lg p-6 shadow-sm">
                     <h3 class="text-xl font-semibold mb-2">Galerias de Fotos</h3>
                     <p class="mb-4 opacity-80">Acompanhe os momentos especiais de cada Life Group. Clique em um dos botões abaixo para ver a galeria de fotos correspondente.</p>
@@ -381,17 +400,13 @@
         const pages = document.querySelectorAll('.page');
         const pageTitle = document.getElementById('page-title');
 
-        // Function to toggle sidebar on mobile
         function toggleSidebar() {
             sidebar.classList.toggle('-translate-x-full');
             overlay.classList.toggle('hidden');
         }
 
-        // Function to switch pages
         function showPage(pageId) {
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
+            pages.forEach(page => page.classList.remove('active'));
             const newPage = document.getElementById(pageId);
             if (newPage) {
                 newPage.classList.add('active');
@@ -400,33 +415,23 @@
                    pageTitle.textContent = link.querySelector('span').textContent;
                 }
             }
-            // Close sidebar on mobile after navigation
             if (window.innerWidth < 768) {
                 toggleSidebar();
             }
         }
 
-        // Add click listeners to navigation links
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const pageId = link.getAttribute('data-page');
-                if (pageId) { // Only show page if data-page exists
+                if (pageId) {
                     showPage(pageId);
-                } else { // Handle external links in sidebar
+                } else {
                     window.open(link.href, '_blank');
                 }
-                
-                // Style active link
                 navLinks.forEach(l => l.classList.remove('bg-blue-500', 'text-white'));
                 link.classList.add('bg-blue-500', 'text-white');
             });
-        });
-
-        // Initialize the app by showing the home page
-        document.addEventListener('DOMContentLoaded', () => {
-            showPage('home');
-            document.querySelector('.nav-link[data-page="home"]').classList.add('bg-blue-500', 'text-white');
         });
 
         // --- Theme Switcher ---
@@ -440,7 +445,7 @@
         });
 
         // --- Carousel Functionality ---
-        document.addEventListener('DOMContentLoaded', () => {
+        function setupCarousel() {
             const carouselWrapper = document.getElementById('carousel-wrapper');
             if (!carouselWrapper) return;
 
@@ -452,7 +457,6 @@
             let currentIndex = 0;
             let autoPlayInterval;
 
-            // Create pagination dots
             if (dotsContainer) {
                 for (let i = 0; i < totalSlides; i++) {
                     const dot = document.createElement('button');
@@ -469,7 +473,6 @@
 
             function updateCarousel() {
                 carouselWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
-                // Update dots
                 if(dots.length > 0) {
                     for (let i = 0; i < dots.length; i++) {
                         dots[i].classList.toggle('bg-opacity-100', i === currentIndex);
@@ -485,40 +488,66 @@
 
             function startAutoPlay() {
                 clearInterval(autoPlayInterval);
-                autoPlayInterval = setInterval(() => {
-                    goToSlide(currentIndex + 1);
-                }, 5000); // Muda a cada 5 segundos
+                autoPlayInterval = setInterval(() => goToSlide(currentIndex + 1), 5000);
             }
 
             function resetAutoPlay() {
                 startAutoPlay();
             }
 
-            if(prevBtn) {
-                prevBtn.addEventListener('click', () => {
-                    goToSlide(currentIndex - 1);
-                    resetAutoPlay();
-                });
-            }
-
-            if(nextBtn) {
-                nextBtn.addEventListener('click', () => {
-                    goToSlide(currentIndex + 1);
-                    resetAutoPlay();
-                });
-            }
+            if(prevBtn) prevBtn.addEventListener('click', () => { goToSlide(currentIndex - 1); resetAutoPlay(); });
+            if(nextBtn) nextBtn.addEventListener('click', () => { goToSlide(currentIndex + 1); resetAutoPlay(); });
             
-            // Initialize
             updateCarousel();
             startAutoPlay();
-        });
+        }
+
+        // --- Testimonials Functionality ---
+        async function carregarDepoimentos() {
+            const container = document.getElementById('depoimentos-container');
+            const urlPlanilha = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdRVplNG4USiw9I5plMvh-6FvtN6f7PkE3TdNlFzjhIdT13EhKZFGSD13bIYCgFP-y08llmF6WcjjE/pub?gid=1087812877&single=true&output=csv';
+
+            try {
+                const response = await fetch(urlPlanilha);
+                if (!response.ok) throw new Error('Falha na resposta da rede');
+                
+                const data = await response.text();
+                
+                container.innerHTML = ''; 
+
+                const linhas = data.split('\n').slice(1);
+
+                if (linhas.length === 0 || (linhas.length === 1 && linhas[0].trim() === '')) {
+                    container.innerHTML = '<p class="theme-text col-span-full text-center">Ainda não há depoimentos.</p>';
+                    return;
+                }
+
+                linhas.forEach(linha => {
+                    if (linha.trim() === '') return;
+
+                    const colunas = linha.split(',');
+                    const nome = colunas[1] ? colunas[1].replace(/"/g, '') : 'Anônimo'; 
+                    const depoimento = colunas[2] ? colunas[2].replace(/"/g, '') : '';
+
+                    const card = document.createElement('div');
+                    card.className = 'theme-card border rounded-lg p-4 shadow-sm flex flex-col';
+                    card.innerHTML = `
+                        <p class="theme-text opacity-80 italic flex-grow">"${depoimento}"</p>
+                        <p class="theme-text font-bold text-right mt-2">- ${nome}</p>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                container.innerHTML = '<p class="theme-text col-span-full text-center">Não foi possível carregar os depoimentos.</p>';
+                console.error('Erro ao buscar depoimentos:', error);
+            }
+        }
 
         // --- "Contribua" Page Functionality ---
         function copyToClipboard(elementSelector) {
             const textToCopy = document.querySelector(elementSelector).innerText;
-            // Use the Clipboard API
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // Show custom toast notification
                 const toast = document.getElementById('toast');
                 toast.style.transform = 'translateY(0)';
                 setTimeout(() => {
@@ -526,26 +555,16 @@
                 }, 2000);
             }).catch(err => {
                 console.error('Failed to copy: ', err);
-                // Fallback for older browsers
-                try {
-                    const textArea = document.createElement("textarea");
-                    textArea.value = textToCopy;
-                    document.body.appendChild(textArea);
-                    textArea.focus();
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    // Show toast for fallback
-                    const toast = document.getElementById('toast');
-                    toast.style.transform = 'translateY(0)';
-                    setTimeout(() => {
-                        toast.style.transform = 'translateY(20rem)';
-                    }, 2000);
-                } catch (e) {
-                       console.error('Fallback copy failed', e);
-                }
             });
         }
+
+        // --- Initialize App ---
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('home');
+            document.querySelector('.nav-link[data-page="home"]').classList.add('bg-blue-500', 'text-white');
+            setupCarousel();
+            carregarDepoimentos();
+        });
     </script>
 
 </body>
