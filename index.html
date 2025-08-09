@@ -147,9 +147,10 @@
                 <div class="mt-4 pt-4 border-t theme-border">
                     <h3 class="px-2 mb-2 text-xs font-semibold tracking-wider uppercase theme-text opacity-70">Líderes de Life</h3>
                     <ul class="space-y-2">
-                         <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScwy-cLq44AX7ZKweIxkA6asiGh_KpMZpnJQlDe1wFL7c_qPw/viewform?usp=dialog" target="_blank" class="nav-link flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white"><i class="fas fa-clipboard-list w-6 text-center"></i><span class="ml-3">Enviar Relatório</span></a></li>
+                         <li><a href="#" id="report-link" class="flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white"><i class="fas fa-clipboard-list w-6 text-center"></i><span class="ml-3">Enviar Relatório</span></a></li>
                     </ul>
                 </div>
+                
                 <div class="mt-auto">
                      <label for="theme-switcher" class="flex items-center cursor-pointer">
                           <div class="relative">
@@ -408,12 +409,32 @@
         Texto copiado!
     </div>
 
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden items-center justify-center p-4">
+        <div class="theme-card rounded-lg shadow-xl p-6 w-full max-w-sm border theme-border">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold theme-text">Acesso Restrito para Líderes</h3>
+                <button id="close-modal-btn" class="text-2xl theme-text opacity-70 hover:opacity-100">×</button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium theme-text mb-1">Usuário</label>
+                    <input type="text" id="username" class="w-full p-2 border theme-border rounded-md theme-card theme-text focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium theme-text mb-1">Senha</label>
+                    <input type="password" id="password" class="w-full p-2 border theme-border rounded-md theme-card theme-text focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <p id="error-message" class="text-red-500 text-sm hidden">Usuário ou senha inválidos.</p>
+                <button id="login-btn" class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">Entrar</button>
+            </div>
+        </div>
+    </div>
     <script>
         // --- App State and Navigation ---
-
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebar-overlay');
-        const navLinks = document.querySelectorAll('.nav-link');
+        const allNavLinks = document.querySelectorAll('.nav-link'); // All links with the nav-link class
+        const pageNavLinks = document.querySelectorAll('.nav-link[data-page]'); // Only links that change pages
         const pages = document.querySelectorAll('.page');
         const pageTitle = document.getElementById('page-title');
 
@@ -436,20 +457,6 @@
                 toggleSidebar();
             }
         }
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageId = link.getAttribute('data-page');
-                if (pageId) {
-                    showPage(pageId);
-                } else {
-                    window.open(link.href, '_blank');
-                }
-                navLinks.forEach(l => l.classList.remove('bg-blue-500', 'text-white'));
-                link.classList.add('bg-blue-500', 'text-white');
-            });
-        });
 
         // --- Theme Switcher ---
         const themeSwitcher = document.getElementById('theme-switcher');
@@ -520,7 +527,7 @@
             startAutoPlay();
         }
 
-        // --- Testimonials Functionality (FINAL CORRECTION) ---
+        // --- Testimonials Functionality ---
         async function carregarDepoimentos() {
             const container = document.getElementById('depoimentos-container');
             const urlPlanilha = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdRVplNG4USiw9I5plMvh-6FvtN6f7PkE3TdNlFzjhIdT13EhKZFGSD13bIYCgFP-y08llmF6WcjjE/pub?gid=1087812877&single=true&output=csv';
@@ -607,6 +614,77 @@
 
         // --- Initialize App ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Setup page navigation
+            pageNavLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.getAttribute('data-page');
+                    showPage(pageId);
+
+                    allNavLinks.forEach(l => l.classList.remove('bg-blue-500', 'text-white'));
+                    link.classList.add('bg-blue-500', 'text-white');
+                });
+            });
+
+            // --- LEADER LOGIN LOGIC (MOVED HERE TO ENSURE DOM IS LOADED) ---
+            const loginModal = document.getElementById('login-modal');
+            const reportLink = document.getElementById('report-link');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const loginBtn = document.getElementById('login-btn');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('error-message');
+            const reportFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScwy-cLq44AX7ZKweIxkA6asiGh_KpMZpnJQlDe1wFL7c_qPw/viewform?usp=dialog';
+
+            if (reportLink) { // Check if the report link exists before adding listeners
+                
+                const isLeaderLoggedIn = () => sessionStorage.getItem('leaderAuth') === 'true';
+    
+                reportLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (isLeaderLoggedIn()) {
+                        window.open(reportFormUrl, '_blank');
+                    } else {
+                        loginModal.classList.remove('hidden');
+                        loginModal.classList.add('flex');
+                        usernameInput.focus();
+                    }
+                });
+                
+                const closeLoginModal = () => {
+                    loginModal.classList.add('hidden');
+                    loginModal.classList.remove('flex');
+                    errorMessage.classList.add('hidden');
+                    passwordInput.value = '';
+                };
+    
+                closeModalBtn.addEventListener('click', closeLoginModal);
+                
+                const handleLogin = () => {
+                    const user = usernameInput.value;
+                    const pass = passwordInput.value;
+    
+                    if (user === 'admlideres' && pass === 'amocelulas') {
+                        sessionStorage.setItem('leaderAuth', 'true');
+                        closeLoginModal();
+                        window.open(reportFormUrl, '_blank');
+                    } else {
+                        errorMessage.classList.remove('hidden');
+                        passwordInput.value = '';
+                        usernameInput.focus();
+                    }
+                };
+    
+                loginBtn.addEventListener('click', handleLogin);
+                
+                passwordInput.addEventListener('keyup', (event) => {
+                    if (event.key === 'Enter') {
+                        handleLogin();
+                    }
+                });
+            }
+
+            // Initial page setup
             showPage('home');
             document.querySelector('.nav-link[data-page="home"]').classList.add('bg-blue-500', 'text-white');
             setupCarousel();
