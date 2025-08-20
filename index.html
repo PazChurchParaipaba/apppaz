@@ -627,91 +627,91 @@
                  }); 
              }); 
 
-             // --- LEADER LOGIN LOGIC (REFACTORED FOR MULTIPLE LINKS) --- 
-             const loginModal = document.getElementById('login-modal'); 
-             const closeModalBtn = document.getElementById('close-modal-btn'); 
-             const loginBtn = document.getElementById('login-btn'); 
-             const usernameInput = document.getElementById('username'); 
-             const passwordInput = document.getElementById('password'); 
-             const errorMessage = document.getElementById('error-message'); 
- 
-             // Links that trigger the login 
-             const reportLink = document.getElementById('report-link'); 
-             const lideresDeLifeLink = document.getElementById('lideres-de-life-link'); // The new link 
- 
-             // URLs for the forms 
-             const originalReportFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScwy-cLq44AX7ZKweIxkA6asiGh_KpMZpnJQlDe1wFL7c_qPw/viewform?usp=dialog'; 
-             const lideresDeLifeFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSf6uDtU-W03AN-mMEog60fEYfUB6Epo25S4Qnm6s_TzMdW8WA/viewform?usp=sharing&ouid=107593731614823362209'; 
- 
-             let targetFormUrl = ''; // This will hold the URL for the currently requested form 
- 
-             const isLeaderLoggedIn = () => sessionStorage.getItem('leaderAuth') === 'true'; 
- 
-             const showLoginModal = () => { 
-                 loginModal.classList.remove('hidden'); 
-                 loginModal.classList.add('flex'); 
-                 usernameInput.focus(); 
-             }; 
- 
-             const closeLoginModal = () => { 
-                 loginModal.classList.add('hidden'); 
-                 loginModal.classList.remove('flex'); 
-                 errorMessage.classList.add('hidden'); 
-                 passwordInput.value = ''; 
-                 targetFormUrl = ''; // Reset on close 
-             }; 
- 
-             const handleLogin = () => { 
-                 const user = usernameInput.value; 
-                 const pass = passwordInput.value; 
- 
-                 if (user === 'admlideres' && pass === 'amocelulas') { 
-                     sessionStorage.setItem('leaderAuth', 'true'); 
-                     if (targetFormUrl) { 
-                         window.open(targetFormUrl, '_blank'); 
-                     } 
-                     closeLoginModal(); 
-                 } else { 
-                     errorMessage.classList.remove('hidden'); 
-                     passwordInput.value = ''; 
-                     usernameInput.focus(); 
-                 } 
-             }; 
- 
-             // Add event listeners to the modal buttons 
-             closeModalBtn.addEventListener('click', closeLoginModal); 
-             loginBtn.addEventListener('click', handleLogin); 
-             passwordInput.addEventListener('keyup', (event) => { 
-                 if (event.key === 'Enter') { 
-                     handleLogin(); 
-                 } 
-             }); 
- 
-             // Add event listener for the original report link 
-             if (reportLink) { 
-                 reportLink.addEventListener('click', (e) => { 
-                     e.preventDefault(); 
-                     targetFormUrl = originalReportFormUrl; // Set target 
-                     if (isLeaderLoggedIn()) { 
-                         window.open(targetFormUrl, '_blank'); 
-                     } else { 
-                         showLoginModal(); 
-                     } 
-                 }); 
-             } 
- 
-             // Add event listener for the NEW "Lideres de Life" link 
-             if (lideresDeLifeLink) { 
-                 lideresDeLifeLink.addEventListener('click', (e) => { 
-                     e.preventDefault(); 
-                     targetFormUrl = lideresDeLifeFormUrl; // Set target for the new form 
-                     if (isLeaderLoggedIn()) { 
-                         window.open(targetFormUrl, '_blank'); 
-                     } else { 
-                         showLoginModal(); 
-                     } 
-                 }); 
-             } 
+             // --- LEADER LOGIN LOGIC (REFACTORED FOR MULTIPLE LINKS) ---
+             const loginModal = document.getElementById('login-modal');
+             const closeModalBtn = document.getElementById('close-modal-btn');
+             const loginBtn = document.getElementById('login-btn');
+             const usernameInput = document.getElementById('username');
+             const passwordInput = document.getElementById('password');
+             const errorMessage = document.getElementById('error-message');
+
+             // Links that trigger the login
+             const reportLink = document.getElementById('report-link');
+             const lideresDeLifeLink = document.getElementById('lideres-de-life-link'); // The new link
+
+             // URLs for the forms
+             const originalReportFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScwy-cLq44AX7ZKweIxkA6asiGh_KpMZpnJQlDe1wFL7c_qPw/viewform?usp=dialog';
+             const lideresDeLifeFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSf6uDtU-W03AN-mMEog60fEYfUB6Epo25S4Qnm6s_TzMdW8WA/viewform?usp=sharing&ouid=107593731614823362209';
+
+             let targetFormUrl = ''; // This will hold the URL for the currently requested form
+
+             const isLeaderLoggedIn = () => sessionStorage.getItem('leaderAuth') === 'true';
+
+             const showLoginModal = () => {
+                 loginModal.classList.remove('hidden');
+                 loginModal.classList.add('flex');
+                 usernameInput.focus();
+             };
+
+             const closeLoginModal = () => {
+                 loginModal.classList.add('hidden');
+                 loginModal.classList.remove('flex');
+                 errorMessage.classList.add('hidden');
+                 passwordInput.value = '';
+                 targetFormUrl = ''; // Reset on close
+             };
+
+             const handleLogin = () => {
+                 const user = usernameInput.value;
+                 const pass = passwordInput.value;
+
+                 if (user === 'admlideres' && pass === 'amocelulas') {
+                     sessionStorage.setItem('leaderAuth', 'true');
+                     if (targetFormUrl) {
+                         window.open(targetFormUrl, '_blank');
+                     }
+                     closeLoginModal();
+                 } else {
+                     errorMessage.classList.remove('hidden');
+                     passwordInput.value = '';
+                     usernameInput.focus();
+                 }
+             };
+
+             // Add event listeners to the modal buttons
+             closeModalBtn.addEventListener('click', closeLoginModal);
+             loginBtn.addEventListener('click', handleLogin);
+             passwordInput.addEventListener('keyup', (event) => {
+                 if (event.key === 'Enter') {
+                     handleLogin();
+                 }
+             });
+
+             // Add event listener for the original report link
+             if (reportLink) {
+                 reportLink.addEventListener('click', (e) => {
+                     e.preventDefault();
+                     targetFormUrl = originalReportFormUrl; // Set target
+                     if (isLeaderLoggedIn()) {
+                         window.open(targetFormUrl, '_blank');
+                     } else {
+                         showLoginModal();
+                     }
+                 });
+             }
+
+             // Add event listener for the NEW "Lideres de Life" link
+             if (lideresDeLifeLink) {
+                 lideresDeLifeLink.addEventListener('click', (e) => {
+                     e.preventDefault();
+                     targetFormUrl = lideresDeLifeFormUrl; // Set target for the new form
+                     if (isLeaderLoggedIn()) {
+                         window.open(targetFormUrl, '_blank');
+                     } else {
+                         showLoginModal();
+                     }
+                 });
+             }
 
              // Initial page setup 
              showPage('home'); 
