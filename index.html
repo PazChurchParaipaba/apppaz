@@ -140,13 +140,13 @@
                     <li><a href="#" class="nav-link flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white" data-page="contribua"><i class="fas fa-hand-holding-heart w-6 text-center"></i><span class="ml-3">Contribua</span></a></li>
                     <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScmHnoKOX0WoPVz99Ru1adw6EFYP4hZGL-9ar5dChl1V0x2Zg/viewform?usp=header" target="_blank" class="nav-link flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white"><i class="fas fa-route w-6 text-center"></i><span class="ml-3">Trajetória do Membro</span></a></li>
                     <li><a href="#" class="nav-link flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white" data-page="membro"><i class="fas fa-user-plus w-6 text-center"></i><span class="ml-3">Seja Membro</span></a></li>
-                    <li><a href="#" id="lideres-de-life-link" class="nav-link flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white"><i class="fas fa-user-tie w-6 text-center"></i><span class="ml-3">Lideres de Life</span></a></li>
+                    <li><a href="#" id="lideres-de-life-link" class="nav-link flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white"><i class="fas fa-user-tie w-6 text-center"></i><span class="ml-3">Líderes de Life</span></a></li>
                 </ul>
 
                 <div class="mt-4 pt-4 border-t theme-border">
                     <h3 class="px-2 mb-2 text-xs font-semibold tracking-wider uppercase theme-text opacity-70">Líderes de Life</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" id="report-link" class="flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white"><i class="fas fa-clipboard-list w-6 text-center"></i><span class="ml-3">Enviar Relatório</span></a></li>
+                        <li><a href="#" id="report-link" class="nav-link flex items-center p-2 rounded-lg hover:bg-blue-500 hover:text-white"><i class="fas fa-clipboard-list w-6 text-center"></i><span class="ml-3">Enviar Relatório</span></a></li>
                     </ul>
                 </div>
 
@@ -625,7 +625,7 @@
                 });
             });
 
-            // --- LEADER LOGIN LOGIC (REFACTORED FOR MULTIPLE LINKS) ---
+            // --- LEADER LOGIN LOGIC ---
             const loginModal = document.getElementById('login-modal');
             const closeModalBtn = document.getElementById('close-modal-btn');
             const loginBtn = document.getElementById('login-btn');
@@ -638,7 +638,7 @@
             const lideresDeLifeLink = document.getElementById('lideres-de-life-link');
 
             // URLs for the forms
-            const originalReportFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScwy-cLq44AX7ZKweIxkA6asiGh_KpMZpnJQlDe1wFL7c_qPw/viewform?usp=dialog';
+            const reportFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLScwy-cLq44AX7ZKweIxkA6asiGh_KpMZpnJQlDe1wFL7c_qPw/viewform?usp=dialog';
             const lideresDeLifeFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSf6uDtU-W03AN-mMEog60fEYfUB6Epo25S4Qnm6s_TzMdW8WA/viewform?usp=sharing&ouid=107593731614823362209';
 
             let targetFormUrl = '';
@@ -687,7 +687,7 @@
             if (reportLink) {
                 reportLink.addEventListener('click', (e) => {
                     e.preventDefault();
-                    targetFormUrl = originalReportFormUrl;
+                    targetFormUrl = reportFormUrl;
                     if (isLeaderLoggedIn()) {
                         window.open(targetFormUrl, '_blank');
                     } else {
